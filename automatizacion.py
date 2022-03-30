@@ -7,13 +7,13 @@ import codecs
 #:
 
 def proceso():
-    url  = 'http://cne.cloudapi.junar.com/api/v2/datastreams/CAPAC-INSTA-DE-GENER-TOTAL/data.pjson/?auth_key=QIupCcn5gQC4U61tB1h8e5GjmrEAefVII90h6z7x&limit=5000'
+    url  = 'https://arclim.mma.gob.cl/media//FeatureSets/comunas//clima/amenazas_comunas_annual.geojson'
     response = requests.get(url)
     decoded_data=codecs.decode(response.content, 'utf-8-sig')
     d = json.loads(decoded_data)
-    df = pd.DataFrame(d["result"])
-    df.to_excel("ELECTRICIDAD/CAPAC-INSTA-DE-GENER-TOTAL.xlsx", index=False)
-    return df    
+    out_file = open("Comunal/amenazas_comunas_annual.geojson", "w")    
+    json.dump(d, out_file, indent = 1)         
+    out_file.close()   
 
 if __name__ == '__main__':    
     try:
